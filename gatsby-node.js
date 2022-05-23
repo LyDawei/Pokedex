@@ -11,7 +11,7 @@ exports.createPages = async ({ actions }) => {
 const fetch = (...args) =>
   import(`node-fetch`).then(({ default: fetch }) => fetch(...args));
 
-const fetchPokemon = async (url, retVal) => {
+const recursiveFetch = async (url, retVal) => {
   if (!url) {
     return retVal;
   }
@@ -24,7 +24,7 @@ const fetchPokemon = async (url, retVal) => {
     ).map(r => r.json())
   );
 
-  return fetchPokemon(next, [...retVal, ...res]);
+  return recursiveFetch(next, [...retVal, ...res]);
 };
 
 exports.sourceNodes = async ({
@@ -33,16 +33,54 @@ exports.sourceNodes = async ({
 }) => {
   // get data from GitHub API at build time
 
-  const pokemon = await fetchPokemon("https://pokeapi.co/api/v2/pokemon", []);
+  const pokemon = await recursiveFetch("https://pokeapi.co/api/v2/pokemon", []);
 
   pokemon.forEach(pkmn => {
     createNode({
       name: pkmn.name,
       weight: pkmn.weight,
-      id: `${pkmn.id}`,
+      abilities: pkmn.abilities,
+      baseExperience: pkmn.baseExperience,
+      forms: pkmn.forms,
+      gameIndices: pkmn.game_indices,
+      height: pkmn.height,
+      heldItems: pkmn.held_items,
+      isDefault: pkmn.is_default,
+      locationAreaEncounters: pkmn.location_area_encounters,
+      moves: pkmn.moves,
+      order: pkmn.order,
+      pastTypes: pkmn.past_types,
+      species: pkmn.species,
+      sprites: pkmn.sprites,
+      stats: pkmn.stats,
+      types: pkmn.types,
+
+      id: `pokemon-${pkmn.id}`,
       internal: {
         type: "pokemon",
         contentDigest: createContentDigest(pkmn),
+      },
+    });
+  });
+
+  const berries = await recursiveFetch("https://pokeapi.co/api/v2/berry", []);
+  berries.forEach(berry => {
+    createNode({
+      name: berry.name,
+      growthTime: berry.growth_time,
+      maxHarvest: berry.max_harvest,
+      naturalGiftPower: berry.natural_gift_power,
+      size: berry.size,
+      smoothness: berry.smoothness,
+      soilDryness: berry.soil_dryness,
+      firmness: berry.firmness,
+      flavors: berry.flavors,
+      item: berry.item,
+      naturalGiftType: berry.natural_gift_type,
+      id: `berry-${berry.id}`,
+      internal: {
+        type: "berry",
+        contentDigest: createContentDigest(berry),
       },
     });
   });
