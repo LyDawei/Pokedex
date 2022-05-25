@@ -1,10 +1,10 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import * as React from "react";
+import { Link, graphql } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 
-import Layout from "../components/layout"
-import Seo from "../components/seo"
-import * as styles from "../components/index.module.css"
+import Layout from "../components/layout";
+import Seo from "../components/seo";
+import * as styles from "../components/index.module.css";
 
 const links = [
   {
@@ -31,7 +31,7 @@ const links = [
     description:
       "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
   },
-]
+];
 
 const samplePageLinks = [
   {
@@ -44,7 +44,7 @@ const samplePageLinks = [
   { text: "TypeScript", url: "using-typescript" },
   { text: "Server Side Rendering", url: "using-ssr" },
   { text: "Deferred Static Generation", url: "using-dsg" },
-]
+];
 
 const moreLinks = [
   { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
@@ -65,58 +65,35 @@ const moreLinks = [
     url: "https://www.gatsbyjs.com/contributing/",
   },
   { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
-]
+];
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`;
 
-const IndexPage = () => (
-  <Layout>
-    <Seo title="Home" />
-    <div className={styles.textCenter}>
-      <StaticImage
-        src="../images/example.png"
-        loading="eager"
-        width={64}
-        quality={95}
-        formats={["auto", "webp", "avif"]}
-        alt=""
-        style={{ marginBottom: `var(--space-3)` }}
-      />
-      <h1>
-        Welcome to <b>Gatsby!</b>
-      </h1>
-      <p className={styles.intro}>
-        <b>Example pages:</b>{" "}
-        {samplePageLinks.map((link, i) => (
-          <React.Fragment key={link.url}>
-            <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> · </>}
-          </React.Fragment>
-        ))}
-        <br />
-        Edit <code>src/pages/index.js</code> to update this page.
-      </p>
-    </div>
-    <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
-        </li>
-      ))}
-    </ul>
-    {moreLinks.map((link, i) => (
-      <React.Fragment key={link.url}>
-        <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> · </>}
-      </React.Fragment>
-    ))}
-  </Layout>
-)
+export const query = graphql`
+  query AllPokemonQuery {
+    allPokemon {
+      edges {
+        node {
+          name
+          order
+          sprites {
+            front_default
+          }
+        }
+      }
+    }
+  }
+`;
 
-export default IndexPage
+const IndexPage = ({ data }) => {
+  const allPokemon = data.allPokemon.edges.map(pkmn => ({
+    order: pkmn.node.order,
+    name: pkmn.node.name,
+    sprite: pkmn.node.sprites.front_default,
+  }));
+
+  console.log(allPokemon);
+  return <div>Hello World</div>;
+};
+
+export default IndexPage;

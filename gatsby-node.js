@@ -34,7 +34,6 @@ exports.sourceNodes = async ({
   // get data from GitHub API at build time
 
   const pokemon = await recursiveFetch("https://pokeapi.co/api/v2/pokemon", []);
-
   pokemon.forEach(pkmn => {
     createNode({
       name: pkmn.name,
