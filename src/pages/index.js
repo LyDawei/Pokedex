@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Link, graphql } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
@@ -6,6 +6,8 @@ import Layout from "../components/layout";
 import Seo from "../components/seo";
 import * as styles from "../components/index.module.css";
 import Card from "react-bootstrap/Card";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Form, Stack } from "react-bootstrap";
 
 const links = [
   {
@@ -93,15 +95,32 @@ const IndexPage = ({ data }) => {
     sprite: pkmn.node.sprites.front_default,
   }));
 
+  const [pokemon, setPokemon] = useState(allPokemon);
+
+  const indexStyle = {
+    flexWrap: "wrap",
+  };
+
   return (
     <Layout>
-      <div>
-        {allPokemon.map(pkmn => {
+      <Form.Control placeholder="Search..." />
+      <Stack style={indexStyle} direction="horizontal" gap={3}>
+        {pokemon.map((pkmn, i) => {
           return (
-            <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "18rem" }} onClick={() => alert("click")}>
               <Card.Img variant="top" src={pkmn.sprite} />
               <Card.Body>
-                <Card.Title>{pkmn.name}</Card.Title>
+                <Card.Title style={{ textTransform: "capitalize" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>{pkmn.name}</span>
+                    <span>{pkmn.order}</span>
+                  </div>
+                </Card.Title>
                 {/* <Card.Text>
           Some quick example text to build on the card title and make up the bulk of
           the card's content.
@@ -111,7 +130,7 @@ const IndexPage = ({ data }) => {
             </Card>
           );
         })}
-      </div>
+      </Stack>
     </Layout>
   );
 };

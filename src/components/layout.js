@@ -11,7 +11,7 @@ import { useStaticQuery, graphql } from "gatsby";
 
 import Header from "./header";
 import "./layout.css";
-import { ThemeProvider } from "react-bootstrap";
+import { Col, Container, Row, Stack, ThemeProvider } from "react-bootstrap";
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
     <ThemeProvider
       breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
     >
-      <main>{children}</main>
+      {children}
     </ThemeProvider>
   );
 
