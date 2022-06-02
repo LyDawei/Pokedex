@@ -99,16 +99,16 @@ const IndexPage = ({ data }) => {
 
   const indexStyle = {
     flexWrap: "wrap",
+    justifyContent: "center",
   };
 
   return (
     <Layout>
-      <Form.Control placeholder="Search..." />
-      <Stack style={indexStyle} direction="horizontal" gap={3}>
+      <Form.Control style={{ display: "flex" }} placeholder="Search..." />
+      <Stack style={indexStyle} direction="horizontal" gap={3} cont>
         {pokemon.map((pkmn, i) => {
           return (
             <Card style={{ width: "18rem" }} onClick={() => alert("click")}>
-              <Card.Img variant="top" src={pkmn.sprite} />
               <Card.Body>
                 <Card.Title style={{ textTransform: "capitalize" }}>
                   <div
@@ -118,9 +118,10 @@ const IndexPage = ({ data }) => {
                     }}
                   >
                     <span>{pkmn.name}</span>
-                    <span>{pkmn.order}</span>
+                    <span>#{pkmn.order}</span>
                   </div>
                 </Card.Title>
+                <Card.Img variant="top" src={pkmn.sprite} />
                 {/* <Card.Text>
           Some quick example text to build on the card title and make up the bulk of
           the card's content.

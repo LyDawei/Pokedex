@@ -10,8 +10,8 @@ import PropTypes from "prop-types";
 import { useStaticQuery, graphql } from "gatsby";
 
 import Header from "./header";
-import "./layout.css";
-import { Col, Container, Row, Stack, ThemeProvider } from "react-bootstrap";
+import "./layout.scss";
+import { Stack, ThemeProvider } from "react-bootstrap";
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,10 +25,10 @@ const Layout = ({ children }) => {
   `);
 
   return (
-    <ThemeProvider
-      breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}
-    >
-      {children}
+    <ThemeProvider breakpoints={["md", "sm", "xs", "xxs"]}>
+      <Stack direction="column" className="layout" gap={3}>
+        {children}
+      </Stack>
     </ThemeProvider>
   );
 
