@@ -25,8 +25,13 @@ const Layout = ({ children }) => {
   `);
 
   return (
-    <ThemeProvider breakpoints={["md", "sm", "xs", "xxs"]}>
-      <Stack direction="column" className="layout" gap={3}>
+    <ThemeProvider>
+      <Stack
+        direction="column"
+        className="col-md-6 mx-auto align-self-center"
+        style={{ marginTop: 50 }}
+        gap={3}
+      >
         {children}
       </Stack>
     </ThemeProvider>
