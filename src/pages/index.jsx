@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Form, Stack } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Layout from "../components/layout";
+import "../global.scss";
 
 export const query = graphql`
   query AllPokemonQuery {
@@ -40,7 +41,9 @@ const IndexPage = ({ data }) => {
     if (!value) {
       setPokemon(allPokemon);
     }
-    const test = allPokemon.filter(pkmn => pkmn.name.includes(value));
+    const test = allPokemon.filter(pkmn =>
+      pkmn.name.includes(value.toLowerCase())
+    );
     setPokemon(test);
   };
 
@@ -56,17 +59,6 @@ const IndexPage = ({ data }) => {
           return (
             <Card style={{ width: "18rem" }} onClick={() => alert("click")}>
               <Card.Body>
-                <Card.Title style={{ textTransform: "capitalize" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span>{pkmn.name}</span>
-                    <span>#{pkmn.order}</span>
-                  </div>
-                </Card.Title>
                 <Card.Img variant="top" src={pkmn.sprite} />
                 {/* <Card.Text>
           Some quick example text to build on the card title and make up the bulk of
@@ -74,6 +66,17 @@ const IndexPage = ({ data }) => {
           </Card.Text>
         <Button variant="primary">Go somewhere</Button> */}
               </Card.Body>
+              <Card.Title style={{ textTransform: "capitalize" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <span>{pkmn.name}</span>
+                  <span>#{pkmn.order}</span>
+                </div>
+              </Card.Title>
             </Card>
           );
         })}

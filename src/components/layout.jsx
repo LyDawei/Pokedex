@@ -25,11 +25,17 @@ const Layout = ({ children }) => {
   `);
 
   return (
-    <ThemeProvider>
+    <ThemeProvider style={{ backgroundColor: "#c3483d" }}>
       <Stack
         direction="column"
-        className="col-md-6 mx-auto align-self-center"
-        style={{ marginTop: 50 }}
+        className="col-md-6 mx-auto align-self-center main"
+        style={{
+          paddingTop: 50,
+          width: 1200,
+          padding: 50,
+          backgroundColor: "#e6e6e6",
+          marginTop: 50,
+        }}
         gap={3}
       >
         {children}

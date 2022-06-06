@@ -1,0 +1,16 @@
+html, body {
+  background-color: var(--color-primary);
+}
+
+html, .main, .card {
+  border: 10px solid #4c4c4b;
+  border-radius: 1em;
+}
+
+.card-body {
+  background-color: #3592bd;
+}
+
+.card-title {
+  padding: 0.25em 1em 0.25em 1em;
+}
